@@ -1,0 +1,42 @@
+name: Recordme
+options:
+  bundleIdPrefix: com.recordme
+  deploymentTarget:
+    macOS: "14.4"
+    iOS: "17.0"
+packages:
+  RecordmeCore:
+    path: .
+targets:
+  RecordmeMac:
+    type: application
+    platform: macOS
+    sources: [Apps/macOS]
+    dependencies:
+      - package: RecordmeCore
+    info:
+      path: Apps/macOS/Info.plist
+      properties:
+        LSUIElement: true
+        NSMicrophoneUsageDescription: Recordme records your microphone so your side of the meeting is transcribed.
+        NSAudioCaptureUsageDescription: Recordme captures audio from Teams, Zoom or your browser so the other participants are transcribed.
+        NSSpeechRecognitionUsageDescription: Recordme transcribes recordings on this Mac. Audio never leaves your device.
+        NSCalendarsFullAccessUsageDescription: Optional. Used to title recordings from your calendar events.
+    entitlements:
+      path: Apps/macOS/Recordme.entitlements
+      properties:
+        com.apple.security.device.audio-input: true
+  RecordmeiOS:
+    type: application
+    platform: iOS
+    sources: [Apps/iOS]
+    dependencies:
+      - package: RecordmeCore
+    info:
+      path: Apps/iOS/Info.plist
+      properties:
+        UIBackgroundModes: [audio, processing]
+        NSSupportsLiveActivities: true
+        NSMicrophoneUsageDescription: Recordme records meetings with your microphone. Audio stays on your iPhone.
+        NSSpeechRecognitionUsageDescription: Recordme transcribes recordings on this iPhone.
+        UILaunchScreen: {}

@@ -1,0 +1,11 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  core-tests:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test RecordmeCore
+        run: swift test
